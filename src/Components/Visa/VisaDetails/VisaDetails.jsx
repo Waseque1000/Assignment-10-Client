@@ -1,48 +1,63 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useParams, Navigate, useLoaderData } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useParams, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/Authproviders";
-// import { latestVisas } from "./visaData";
 
-const VisaDetails = ({ isLoggedIn }) => {
+const VisaDetails = () => {
   const { user } = useContext(AuthContext);
   const data = useLoaderData();
   const { id } = useParams();
-  const [visa, setVisa] = useState(null);
+  const visa = data.find((item) => item._id === id);
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
     firstName: "",
     lastName: "",
-    appliedDate: new Date().toISOString().split("T")[0], // Current Date
-    fee: "",
   });
 
-  useEffect(() => {
-    const foundVisa = data.find((item) => item._id === id);
-    setVisa(foundVisa || null);
-  }, [id, data]);
-
-  if (!visa) {
-    return <p className="text-center mt-5">Loading Visa Details...</p>; // Show a fallback if visa is not found
-  }
-
-  const openModal = () => {
-    setFormData({
-      ...formData,
-      email: visa.email, // Replace with the logged-in user's email
-      fee: visa.fee,
-    });
-    setModalOpen(true);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => {
+    setModalOpen(false);
+    setFormData({ firstName: "", lastName: "" }); // Reset form data on close
   };
-
-  const closeModal = () => setModalOpen(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting Data: ", formData, visa);
-    // Add database submission logic here
-    closeModal();
+
+    const submissionData = {
+      email: user?.email,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      appliedDate: new Date().toISOString().split("T")[0],
+      fee: visa.fee,
+      visaType: visa.visaType,
+      validity: visa.validity,
+      processingTime: visa.processingTime,
+      country: visa.countryName,
+      status: "pending",
+      applicationMethod: visa.applicationMethod,
+      img: visa.countryImage,
+    };
+
+    fetch(`http://localhost:5000/myvisa`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(submissionData, visa),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Application submitted:", data);
+        closeModal();
+      })
+      .catch((error) => console.error("Error submitting application:", error));
   };
+
+  if (!visa) {
+    return (
+      <p className="text-center mt-5 text-red-500">
+        Visa not found. Please check the URL or try again later.
+      </p>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto p-5">
@@ -74,9 +89,8 @@ const VisaDetails = ({ isLoggedIn }) => {
         Apply for the Visa
       </button>
 
-      {/* Modal */}
       {isModalOpen && (
-        <div className="fixed mt-40 inset-0 bg-opacity-50 flex items-center justify-center">
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
           <div className="bg-white rounded p-5 w-96">
             <h2 className="text-xl font-bold mb-4">Apply for the Visa</h2>
             <form onSubmit={handleSubmit}>
@@ -103,18 +117,6 @@ const VisaDetails = ({ isLoggedIn }) => {
                 onChange={(e) =>
                   setFormData({ ...formData, lastName: e.target.value })
                 }
-              />
-              <input
-                type="text"
-                value={`Applied Date: ${formData.appliedDate}`}
-                readOnly
-                className="w-full mb-3 p-2 border rounded"
-              />
-              <input
-                type="text"
-                value={`Fee: ${formData.fee}`}
-                readOnly
-                className="w-full mb-3 p-2 border rounded"
               />
               <button
                 type="submit"

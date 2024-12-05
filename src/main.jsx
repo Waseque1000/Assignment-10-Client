@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("/data.json"),
+        loader: () => fetch("http://localhost:5000/addvisa"),
       },
       {
         path: "register",
@@ -63,6 +63,7 @@ const router = createBrowserRouter([
             <MyVisaApplications />
           </PrivateRouts>
         ),
+        loader: () => fetch("http://localhost:5000/myvisa"),
       },
 
       {
