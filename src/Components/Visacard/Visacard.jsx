@@ -1,8 +1,10 @@
 import React from "react";
 import { Clock, CreditCard, Calendar } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 const Visacard = ({ visa }) => {
+  console.log(visa);
+  const data = useLoaderData();
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1">
       <div className="relative h-48">
@@ -13,7 +15,7 @@ const Visacard = ({ visa }) => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
         <div className="absolute bottom-4 left-4 text-white">
-          <h3 className="text-xl font-bold">{visa.country}</h3>
+          <h3 className="text-xl font-bold">{visa.countryName}</h3>
           <p className="text-sm opacity-90">{visa.visaType}</p>
         </div>
       </div>
@@ -37,9 +39,9 @@ const Visacard = ({ visa }) => {
         <div className="text-sm text-gray-500">
           Application Method: {visa.applicationMethod}
         </div>
-
+        <div className="text-sm text-gray-500">Author: {visa.author}</div>
         <Link
-          to={`/visa/${visa.id}`}
+          to={`/visadetails/${visa._id}`}
           className="block w-full text-center py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
         >
           See Details
