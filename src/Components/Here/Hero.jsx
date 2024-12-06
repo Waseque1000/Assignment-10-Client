@@ -50,16 +50,7 @@ export function Hero() {
             <Visacard key={visa.id} visa={visa} />
           ))}
         </div>
-        <div className="text-center mt-12">
-          {/* {!showAllVisas && (
-            // <Link to="/allvisa">
-            // <button className="inline-flex items-center px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition">
-            //   See all visas
-            //   <ChevronRight className="ml-2 h-5 w-5" />
-            // </button>
-            // </Link>
-          )} */}
-        </div>
+        <div className="text-center mt-12"></div>
       </section>
 
       {/* Real-time Updates Section */}

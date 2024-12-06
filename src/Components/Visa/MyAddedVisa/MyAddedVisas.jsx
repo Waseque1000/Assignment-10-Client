@@ -49,7 +49,7 @@ const MyAddedVisas = () => {
       if (response.ok) {
         alert("Visa updated successfully!");
         setShowModal(false);
-        window.location.reload(); // Refresh the list after update
+        window.location.reload();
       } else {
         alert("Failed to update visa");
       }
