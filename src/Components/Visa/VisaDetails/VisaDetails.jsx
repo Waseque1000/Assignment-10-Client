@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { useParams, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/Authproviders";
+import { toast } from "react-toastify";
 
 const VisaDetails = () => {
   const { user } = useContext(AuthContext);
@@ -46,6 +47,7 @@ const VisaDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("Application submitted:", data);
+        toast.success("Application submitted successfully!");
         closeModal();
       })
       .catch((error) => console.error("Error submitting application:", error));
