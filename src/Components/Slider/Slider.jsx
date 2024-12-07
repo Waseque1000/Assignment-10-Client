@@ -7,18 +7,18 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const Slider = () => {
   const slides = [
     {
-      title: "Slide 1",
-      description: "Description for Slide 1",
+      title: "Visit World",
+      // description: "Description for Slide 1",
       image: "https://i.ibb.co.com/hWzczM8/p-1.jpg",
     },
     {
-      title: "Slide 2",
-      description: "Description for Slide 2",
+      title: "Know Yourself",
+      // description: "Description for Slide 2",
       image: "https://i.ibb.co.com/8cCCy1b/p-2.jpg",
     },
     {
-      title: "Slide 3",
-      description: "Description for Slide 2",
+      title: "Learn More",
+      // description: "Description for Slide 2",
       image: "https://i.ibb.co.com/myXNshK/p3.jpg",
     },
   ];

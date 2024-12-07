@@ -64,7 +64,7 @@ const VisaDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+    <div className="  bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
       <div className="max-w-4xl mx-auto p-5">
         <h1 className="text-2xl font-bold mb-4">{visa.country} Visa Details</h1>
         <div className="bg-white dark:bg-gray-800 p-5 rounded shadow-md">

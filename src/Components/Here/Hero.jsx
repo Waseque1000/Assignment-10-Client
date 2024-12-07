@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
 import { Link, useLoaderData } from "react-router-dom";
 import Slider from "../Slider/Slider";
@@ -39,7 +39,7 @@ export function Hero() {
   const visasToShow = showAllVisas ? datas : datas.slice(0, 6);
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+    <div className="  bg-white dark:bg-gray-900">
       <Slider slides={slides} />
 
       {/* Latest Visas Section */}
@@ -47,12 +47,19 @@ export function Hero() {
         <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-white">
           Latest Visas
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {visasToShow.map((visa) => (
             <Visacard key={visa.id} visa={visa} />
           ))}
         </div>
-        <div className="text-center mt-12"></div>
+        <div className="text-center mt-12">
+          <button
+            onClick={() => setShowAllVisas(!showAllVisas)}
+            className="btn btn-outline text-gray-900 dark:text-white"
+          >
+            {showAllVisas ? "Show Less" : "Show More"}
+          </button>
+        </div>
       </section>
 
       {/* Real-time Updates Section */}
@@ -76,7 +83,7 @@ export function Hero() {
                 Track your application <ChevronRight className="ml-1 h-5 w-5" />
               </Link>
             </div>
-            <div className="relative h-96">
+            <div className="relative h-96 sm:h-80 md:h-96">
               <img
                 src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800"
                 alt="Visa Processing"
@@ -86,10 +93,11 @@ export function Hero() {
           </div>
         </div>
       </section>
+
+      {/* Visa Stats Section */}
       <section>
         <VisaStatsSection />
       </section>
-      {/* Travel Resources Section */}
     </div>
   );
 }
