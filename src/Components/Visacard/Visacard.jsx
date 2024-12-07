@@ -6,7 +6,7 @@ const Visacard = ({ visa }) => {
   console.log(visa);
   const data = useLoaderData();
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-transform hover:-translate-y-1">
       <div className="relative h-48">
         <img
           src={visa.countryImage}
@@ -22,27 +22,29 @@ const Visacard = ({ visa }) => {
 
       <div className="p-4 space-y-4">
         <div className="space-y-2">
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 dark:text-gray-300">
             <Clock className="h-5 w-5 mr-2" />
             <span>{visa.processingTime}</span>
           </div>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 dark:text-gray-300">
             <CreditCard className="h-5 w-5 mr-2" />
             <span>{visa.fee}</span>
           </div>
-          <div className="flex items-center text-gray-600">
+          <div className="flex items-center text-gray-600 dark:text-gray-300">
             <Calendar className="h-5 w-5 mr-2" />
             <span>{visa.validity}</span>
           </div>
         </div>
 
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-500 dark:text-gray-400">
           Application Method: {visa.applicationMethod}
         </div>
-        <div className="text-sm text-gray-500">Author: {visa.author}</div>
+        <div className="text-sm text-gray-500 dark:text-gray-400">
+          Author: {visa.author}
+        </div>
         <Link
           to={`/visadetails/${visa._id}`}
-          className="block w-full text-center py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+          className="block w-full text-center py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition"
         >
           See Details
         </Link>

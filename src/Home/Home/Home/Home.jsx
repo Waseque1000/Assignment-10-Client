@@ -5,9 +5,16 @@ import Footer from "../../../Components/Footer/Footer";
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-base-100 dark:bg-gray-900">
+      {/* Hero Section */}
       <Hero />
-      <Newsletter></Newsletter>
+
+      {/* Newsletter Section */}
+      <div className="mt-8">
+        <Newsletter />
+      </div>
+
+      {/* Footer Section */}
       <Footer />
     </div>
   );

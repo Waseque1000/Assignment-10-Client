@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "../../Provider/Authproviders";
 
 const MyVisaApplications = () => {
   const [applications, setApplications] = useState([]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState(null);
+  const { user } = useContext(AuthContext);
 
-  // Fetch visa applications on component mount
   useEffect(() => {
-    fetchApplications();
-  }, []);
+    if (user?.email) {
+      fetchApplications(user.email);
+    }
+  }, [user]);
 
-  const fetchApplications = async () => {
+  // Fetch applications for the logged-in user
+  const fetchApplications = async (email) => {
     try {
-      const response = await fetch("http://localhost:5000/myvisa"); // Replace with your backend API URL
+      const response = await fetch(`http://localhost:5000/myvisa/${email}`);
       if (!response.ok) {
         throw new Error("Failed to fetch applications");
       }
@@ -43,7 +47,7 @@ const MyVisaApplications = () => {
       const result = await response.json();
       alert(result.message || "Application canceled successfully!");
 
-      // Update the state to show remaining data
+      // Update local state
       setApplications((prevApplications) =>
         prevApplications.filter((app) => app._id !== applicationId)
       );
