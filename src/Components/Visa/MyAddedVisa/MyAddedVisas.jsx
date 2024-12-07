@@ -2,16 +2,20 @@ import React, { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/Authproviders";
 import { toast } from "react-toastify";
+import { RxCross1 } from "react-icons/rx";
 
 const MyAddedVisas = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedVisa, setSelectedVisa] = useState({
     countryName: "",
+    countryImage: "", // Added countryImage to state
     visaType: "",
     processingTime: "",
     fee: "",
     validity: "",
+    applicationMethod: "", // Added applicationMethod to state
   });
+
   const datas = useLoaderData(); // All visas data from the backend
   const { user } = useContext(AuthContext); // Logged-in user information
 
@@ -21,7 +25,7 @@ const MyAddedVisas = () => {
     : [];
 
   const handleUpdateClick = (visa) => {
-    setSelectedVisa(visa);
+    setSelectedVisa(visa); // Set selected visa with all details
     setShowModal(true);
   };
 
@@ -43,19 +47,15 @@ const MyAddedVisas = () => {
   };
 
   const handleUpdateSubmit = async (updatedVisa) => {
-    const updatedData = { ...updatedVisa };
-    if (updatedData.countryName === "") delete updatedData.countryName;
-    if (updatedData.visaType === "") delete updatedData.visaType;
-
     try {
       const response = await fetch(
         `http://localhost:5000/addvisa/${updatedVisa._id}`,
         {
-          method: "PUT",
+          method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(updatedData),
+          body: JSON.stringify(updatedVisa), // Ensure _id is part of this object
         }
       );
 
@@ -68,6 +68,21 @@ const MyAddedVisas = () => {
       }
     } catch (error) {
       console.error("Error updating visa:", error);
+    }
+  };
+
+  // Handle image change
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSelectedVisa((prev) => ({
+          ...prev,
+          countryImage: reader.result, // Store image as a base64 string
+        }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -88,7 +103,7 @@ const MyAddedVisas = () => {
             {userVisas.map((visa) => (
               <div
                 key={visa._id}
-                className="p-4 border rounded-lg shadow-sm bg-white dark:bg-gray-800"
+                className="p-4 rounded-lg shadow-sm bg-white dark:bg-gray-800"
               >
                 <img
                   src={visa.countryImage}
@@ -98,7 +113,6 @@ const MyAddedVisas = () => {
                 <p>
                   <strong>Country:</strong>
                   <span className="text-2xl font-bold text-red-500 dark:text-red-400">
-                    {" "}
                     {visa.countryName}
                   </span>
                 </p>
@@ -117,13 +131,10 @@ const MyAddedVisas = () => {
                 <p>
                   <strong>Application Method:</strong> {visa.applicationMethod}
                 </p>
-                <p>
-                  <strong>Author:</strong> {visa.author}
-                </p>
                 <div className="mt-4 flex justify-between">
                   <button
                     onClick={() => handleUpdateClick(visa)}
-                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 dark:bg-yellow-400 dark:hover:bg-yellow-500"
+                    className="px-4 py-2 bg-indigo-700 text-white rounded-lg hover:bg-indigo-600 dark:bg-indigo-400 dark:hover:bg-indigo-500"
                   >
                     Update
                   </button>
@@ -142,9 +153,17 @@ const MyAddedVisas = () => {
         {showModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md dark:bg-gray-800">
-              <h2 className="text-2xl font-bold mb-4 dark:text-white">
-                Update Visa
-              </h2>
+              <div className="flex justify-between">
+                <h2 className="text-2xl font-bold mb-4 dark:text-white">
+                  Update Visa
+                </h2>
+                <button
+                  onClick={() => setShowModal(false)}
+                  className="text-2xl text-red-500"
+                >
+                  <RxCross1 />
+                </button>
+              </div>
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
@@ -165,6 +184,14 @@ const MyAddedVisas = () => {
                   required
                   className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                 />
+
+                <input
+                  type="text"
+                  name="countryImage"
+                  value={selectedVisa.countryImage}
+                  className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
+                />
+
                 <input
                   type="text"
                   name="visaType"
@@ -178,7 +205,7 @@ const MyAddedVisas = () => {
                   required
                   className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                 />
-                <input
+                {/* <input
                   type="text"
                   name="processingTime"
                   value={selectedVisa.processingTime}
@@ -190,7 +217,7 @@ const MyAddedVisas = () => {
                   }
                   required
                   className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
-                />
+                /> */}
                 <input
                   type="number"
                   name="fee"
@@ -209,6 +236,19 @@ const MyAddedVisas = () => {
                     setSelectedVisa({
                       ...selectedVisa,
                       validity: e.target.value,
+                    })
+                  }
+                  required
+                  className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
+                />
+                <input
+                  type="text"
+                  name="applicationMethod"
+                  value={selectedVisa.applicationMethod}
+                  onChange={(e) =>
+                    setSelectedVisa({
+                      ...selectedVisa,
+                      applicationMethod: e.target.value,
                     })
                   }
                   required

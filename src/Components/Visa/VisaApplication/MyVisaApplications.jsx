@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../Provider/Authproviders";
+import { toast } from "react-toastify";
 
 const MyVisaApplications = () => {
   const [applications, setApplications] = useState([]);
@@ -40,12 +41,12 @@ const MyVisaApplications = () => {
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Error:", errorData.message);
-        alert("Failed to cancel the application. Please try again.");
+        toast.error("Failed to cancel the application. Please try again.");
         return;
       }
 
       const result = await response.json();
-      alert(result.message || "Application canceled successfully!");
+      toast.success(result.message || "Application canceled successfully!");
 
       // Update local state
       setApplications((prevApplications) =>
@@ -53,7 +54,7 @@ const MyVisaApplications = () => {
       );
     } catch (error) {
       console.error("Error canceling application:", error);
-      alert("An error occurred while canceling the application.");
+      toast.warning("An error occurred while canceling the application.");
     }
   };
 
@@ -72,105 +73,102 @@ const MyVisaApplications = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-bold">My Visa Applications</h1>
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      <div className="max-w-4xl mx-auto p-6 space-y-6">
+        <h1 className="text-3xl font-bold">My Visa Applications</h1>
 
-      {/* No applications */}
-      {applications.length === 0 ? (
-        <div className="card bg-base-100 shadow-xl">
-          <div className="card-body">
-            <p className="text-center text-gray-500">
-              No visa applications found.
-            </p>
+        {/* No applications */}
+        {applications.length === 0 ? (
+          <div className="card bg-white dark:bg-gray-800 shadow-xl">
+            <div className="card-body">
+              <p className="text-center text-gray-500 dark:text-gray-400">
+                No visa applications found.
+              </p>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {applications.map((application) => (
-            <div key={application._id} className="card bg-base-100 shadow-xl">
-              <figure>
-                <img
-                  src={application.img}
-                  alt={application.country}
-                  className="w-full h-48 object-cover"
-                />
-              </figure>
-              <div className="card-body p-6 space-y-4">
-                <h2 className="card-title">{application.country}</h2>
-                <div className="space-y-2 text-sm">
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Country:</span>
-                    <span>{application.country}</span>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {applications.map((application) => (
+              <div
+                key={application._id}
+                className="card bg-white dark:bg-gray-800 shadow-xl"
+              >
+                <figure>
+                  <img
+                    src={application.img}
+                    alt={application.country}
+                    className="w-full h-48 object-cover"
+                  />
+                </figure>
+                <div className="card-body p-6 space-y-4">
+                  <h2 className="card-title">{application.country}</h2>
+                  <div className="space-y-2 text-sm">
+                    {[
+                      { label: "Country", value: application.country },
+                      { label: "Visa Type", value: application.visaType },
+                      {
+                        label: "Processing Time",
+                        value: application.processingTime,
+                      },
+                      { label: "Fee", value: application.fee },
+                      { label: "Validity", value: application.validity },
+                      { label: "Applied Date", value: application.appliedDate },
+                      {
+                        label: "Applicant Name",
+                        value: `${application.firstName} ${application.lastName}`,
+                      },
+                      { label: "Applicant Email", value: application.email },
+                    ].map(({ label, value }) => (
+                      <div className="grid grid-cols-2 gap-2" key={label}>
+                        <span className="font-semibold">{label}:</span>
+                        <span>{value}</span>
+                      </div>
+                    ))}
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Visa Type:</span>
-                    <span>{application.visaType}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Processing Time:</span>
-                    <span>{application.processingTime}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Fee:</span>
-                    <span>{application.fee}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Validity:</span>
-                    <span>{application.validity}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Applied Date:</span>
-                    <span>{application.appliedDate}</span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Applicant Name:</span>
-                    <span>
-                      {application.firstName + " " + application.lastName}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-2">
-                    <span className="font-semibold">Applicant Email:</span>
-                    <span>{application.email}</span>
-                  </div>
-                </div>
 
-                <div className="card-actions justify-end">
-                  <button
-                    className="btn btn-error w-full"
-                    onClick={() => handleCancelClick(application._id)}
-                  >
-                    Cancel Application
-                  </button>
+                  <div className="card-actions justify-end">
+                    <button
+                      className="btn btn-error w-full text-white"
+                      onClick={() => handleCancelClick(application._id)}
+                    >
+                      Cancel Application
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
-      )}
+            ))}
+          </div>
+        )}
 
-      {/* Confirmation Dialog */}
-      {showConfirmDialog && (
-        <div className="modal modal-open">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">Cancel Visa Application</h3>
-            <p className="py-4">
-              Are you sure you want to cancel this visa application? This action
-              cannot be undone.
-            </p>
-            <div className="modal-action">
-              <button
-                className="btn"
-                onClick={() => setShowConfirmDialog(false)}
-              >
-                No, keep it
-              </button>
-              <button className="btn btn-error" onClick={handleConfirmCancel}>
-                Yes, cancel application
-              </button>
+        {/* Confirmation Dialog */}
+        {showConfirmDialog && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-full max-w-md">
+              <h3 className="font-bold text-lg text-gray-800 dark:text-gray-100">
+                Cancel Visa Application
+              </h3>
+              <p className="py-4 text-gray-600 dark:text-gray-300">
+                Are you sure you want to cancel this visa application? This
+                action cannot be undone.
+              </p>
+              <div className="flex justify-end space-x-4">
+                <button
+                  className="btn bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600"
+                  onClick={() => setShowConfirmDialog(false)}
+                >
+                  No, keep it
+                </button>
+                <button
+                  className="btn btn-error text-white"
+                  onClick={handleConfirmCancel}
+                >
+                  Yes, cancel application
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

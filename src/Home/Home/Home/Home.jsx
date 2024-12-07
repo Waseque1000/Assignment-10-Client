@@ -1,13 +1,17 @@
 import React from "react";
 import { Hero } from "../../../Components/Here/Hero";
 import Newsletter from "../../../Components/Newsletter/Newsletter";
-import Footer from "../../../Components/Footer/Footer";
+import VisaStatsSection from "../../../Components/About/VisaStatsSection";
+import VisaServicesSection from "../../../Components/About/VisaServicesSection";
+import VisaStatusSection from "../../../Components/About/MainSEction/VisaStatusSection";
 
 const Home = () => {
   return (
     <div className="bg-base-100 dark:bg-gray-900">
-      {/* Hero Section */}
+      {/* <Navbar /> */}
       <Hero />
+      <VisaStatusSection></VisaStatusSection>
+      <VisaServicesSection />
 
       {/* Newsletter Section */}
       <div className="mt-8">
@@ -15,7 +19,7 @@ const Home = () => {
       </div>
 
       {/* Footer Section */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

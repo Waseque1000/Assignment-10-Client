@@ -18,6 +18,7 @@ import AllVisas from "./Components/Visa/AllVisa/Allvisa";
 import VisaDetails from "./Components/Visa/VisaDetails/VisaDetails";
 import MyVisaApplications from "./Components/Visa/VisaApplication/MyVisaApplications";
 import MyAddedVisas from "./Components/Visa/MyAddedVisa/MyAddedVisas";
+import Error from "./Components/Error/Error";
 // import MyAddedVisas from "./Components/Visa/MyAddedVisa/MyAddedVisas";
 
 const router = createBrowserRouter([
@@ -35,8 +36,18 @@ const router = createBrowserRouter([
         element: <Registar />,
       },
       {
+        path: "/allvisa",
+        element: <AllVisas />,
+        loader: () => fetch("http://localhost:5000/addvisa"),
+      },
+      {
         path: "/visadetails/:id",
-        element: <VisaDetails />,
+
+        element: (
+          <PrivateRouts>
+            <VisaDetails />,
+          </PrivateRouts>
+        ),
         loader: () => fetch("http://localhost:5000/addvisa"),
       },
       {
@@ -51,15 +62,7 @@ const router = createBrowserRouter([
           </PrivateRouts>
         ),
       },
-      {
-        path: "/allvisa",
-        element: (
-          <PrivateRouts>
-            <AllVisas />
-          </PrivateRouts>
-        ),
-        loader: () => fetch("http://localhost:5000/addvisa"),
-      },
+
       {
         path: "/myvisaapplication",
         element: (
@@ -78,6 +81,10 @@ const router = createBrowserRouter([
           </PrivateRouts>
         ),
         loader: () => fetch("http://localhost:5000/addvisa"),
+      },
+      {
+        path: "*",
+        element: <Error />,
       },
     ],
   },
