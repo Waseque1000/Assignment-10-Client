@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/Authproviders";
+import { Helmet } from "react-helmet";
 
 const AddVisa = () => {
   const data = useContext(AuthContext);
@@ -83,6 +84,9 @@ const AddVisa = () => {
 
   return (
     <div className="dark:bg-gray-900 bg-white">
+      <Helmet>
+        <title>Visa || Add VIsa</title>
+      </Helmet>
       <div className="max-w-4xl mx-auto  pt-10 pb-12  p-6 dark:bg-gray-900 bg-white shadow-md rounded-lg">
         <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">
           Add Visa
