@@ -23,6 +23,7 @@ const MyVisaApplications = () => {
       }
       const data = await response.json();
       setApplications(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching applications:", error);
     }
@@ -96,15 +97,15 @@ const MyVisaApplications = () => {
                 <figure>
                   <img
                     src={application.img}
-                    alt={application.country}
+                    alt={application.countryName}
                     className="w-full h-48 object-cover"
                   />
                 </figure>
                 <div className="card-body p-6 space-y-4">
-                  <h2 className="card-title">{application.country}</h2>
+                  {/* <h2 className="card-title">{application.countryName}</h2> */}
                   <div className="space-y-2 text-sm">
                     {[
-                      { label: "Country", value: application.country },
+                      // { label: "Country", value: application.countryName },
                       { label: "Visa Type", value: application.visaType },
                       {
                         label: "Processing Time",

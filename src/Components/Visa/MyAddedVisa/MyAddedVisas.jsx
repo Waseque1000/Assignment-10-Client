@@ -188,7 +188,8 @@ const MyAddedVisas = () => {
                 <input
                   type="text"
                   name="countryImage"
-                  value={selectedVisa.countryImage}
+                  placeholder="Image"
+                  // value={selectedVisa.countryImage}
                   className="input input-bordered w-full dark:bg-gray-700 dark:text-white"
                 />
 
@@ -221,6 +222,7 @@ const MyAddedVisas = () => {
                 <input
                   type="number"
                   name="fee"
+                  placeholder="Fee"
                   value={selectedVisa.fee}
                   onChange={(e) =>
                     setSelectedVisa({ ...selectedVisa, fee: e.target.value })
