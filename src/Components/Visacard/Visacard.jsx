@@ -4,7 +4,7 @@ import { Link, useLoaderData } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
 const Visacard = ({ visa }) => {
-  console.log(visa);
+  // console.log(visa);
   const data = useLoaderData();
 
   return (

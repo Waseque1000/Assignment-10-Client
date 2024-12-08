@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet";
 const AddVisa = () => {
   const data = useContext(AuthContext);
   const { user } = data;
-  console.log(user);
+  // console.log(user);
   const [formData, setFormData] = useState({
     countryImage: "",
     countryName: "",
@@ -46,7 +46,7 @@ const AddVisa = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:5000/addvisa", {
+    fetch("https://newserver-pi.vercel.app/addvisa", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

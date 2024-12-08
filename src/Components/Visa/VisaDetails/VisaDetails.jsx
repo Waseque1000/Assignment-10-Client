@@ -39,14 +39,14 @@ const VisaDetails = () => {
       img: visa.countryImage,
     };
 
-    fetch("http://localhost:5000/myvisa", {
+    fetch("https://newserver-pi.vercel.app/myvisa", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(submissionData), // Removed the incorrect second argument
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("Application submitted:", data);
+        // console.log("Application submitted:", data);
         toast.success("Application submitted successfully!");
         closeModal();
       })

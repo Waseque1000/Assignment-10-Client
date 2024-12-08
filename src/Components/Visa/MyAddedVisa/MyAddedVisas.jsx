@@ -32,9 +32,12 @@ const MyAddedVisas = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/addvisa/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://newserver-pi.vercel.app/addvisa/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.ok) {
         toast.success("Visa deleted successfully!");
         // Refresh the list after deletion
@@ -50,7 +53,7 @@ const MyAddedVisas = () => {
   const handleUpdateSubmit = async (updatedVisa) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/addvisa/${updatedVisa._id}`,
+        `https://newserver-pi.vercel.app/addvisa/${updatedVisa._id}`,
         {
           method: "PATCH",
           headers: {

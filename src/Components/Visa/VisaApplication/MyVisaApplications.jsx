@@ -18,13 +18,15 @@ const MyVisaApplications = () => {
   // Fetch applications for the logged-in user
   const fetchApplications = async (email) => {
     try {
-      const response = await fetch(`http://localhost:5000/myvisa/${email}`);
+      const response = await fetch(
+        `https://newserver-pi.vercel.app/myvisa/${email}`
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch applications");
       }
       const data = await response.json();
       setApplications(data);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.error("Error fetching applications:", error);
     }
@@ -34,7 +36,7 @@ const MyVisaApplications = () => {
   const onCancelApplication = async (applicationId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/myvisa/${applicationId}`,
+        `https://newserver-pi.vercel.app/myvisa/${applicationId}`,
         {
           method: "DELETE",
         }

@@ -29,7 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: () => fetch("http://localhost:5000/addvisa"),
+        loader: () =>
+          fetch(
+            "https://newserver-pi.vercel.app/addvisa"
+          ),
       },
       {
         path: "register",
@@ -38,7 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/allvisa",
         element: <AllVisas />,
-        loader: () => fetch("http://localhost:5000/addvisa"),
+        loader: () =>
+          fetch(
+            "https://newserver-pi.vercel.app/addvisa"
+          ),
       },
       {
         path: "/visadetails/:id",
@@ -48,8 +54,12 @@ const router = createBrowserRouter([
             <VisaDetails />,
           </PrivateRouts>
         ),
-        loader: () => fetch("http://localhost:5000/addvisa"),
+        loader: () =>
+          fetch(
+            "https://newserver-pi.vercel.app/addvisa"
+          ),
       },
+
       {
         path: "/login",
         element: <Login />,
@@ -70,7 +80,10 @@ const router = createBrowserRouter([
             <MyVisaApplications />
           </PrivateRouts>
         ),
-        loader: () => fetch("http://localhost:5000/myvisa"),
+        loader: () =>
+          fetch(
+            "https://newserver-pi.vercel.app/myvisa"
+          ),
       },
 
       {
@@ -80,7 +93,10 @@ const router = createBrowserRouter([
             <MyAddedVisas />
           </PrivateRouts>
         ),
-        loader: () => fetch("http://localhost:5000/addvisa"),
+        loader: () =>
+          fetch(
+            "https://newserver-pi.vercel.app/addvisa"
+          ),
       },
       {
         path: "*",
