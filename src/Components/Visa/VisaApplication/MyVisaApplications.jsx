@@ -79,7 +79,7 @@ const MyVisaApplications = () => {
   return (
     <div className=" bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       <Helmet>
-        <title>Visa || My Application</title>
+        <title>Visa </title>
       </Helmet>
       <div className="max-w-4xl mx-auto p-6 space-y-6">
         <h1 className="text-3xl font-bold">My Visa Applications</h1>
